@@ -1,4 +1,11 @@
-## Running React on Repl.it
+## Live URL : https://custom-login-page.netlify.app/
+#### A simple login page created with Chakra UI and React, form handling with Formik and validation with Yup.
+
+### To run locally:
+#### Run npm install first then npm run dev
+
+________________________________________________________________________________________________________________________________________________________________________________
+Running React on Repl.it
 
 [React](https://reactjs.org/) is a popular JavaScript library for building user interfaces.
 
