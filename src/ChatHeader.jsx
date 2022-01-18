@@ -1,7 +1,9 @@
 import { Flex, Avatar, AvatarBadge, Text } from '@chakra-ui/react'
 import React from 'react'
+import { useNavigate } from 'react-router'
 
 export default function ChatHeader({email}) {
+    const navigate = useNavigate()
     return (
         <Flex 
             w="100%"
@@ -13,9 +15,11 @@ export default function ChatHeader({email}) {
         >
             <Text
                 fontWeight="700"
-                fontSize={{base:"0.8em", md:"1.5rem"}}
+                fontSize={{base:"1.2em", md:"1.5rem"}}
+                onClick={()=> navigate("/")}
+                _hover={{cursor:"pointer"}}
             >
-                Welcome, {email}
+                LOGO
             </Text>
             <Avatar name={email}>
                 <AvatarBadge boxSize='1em' bg='green.500' />

@@ -46,6 +46,8 @@ function Login(){
               setTimeout(() => {
                 //removes old email stored in local storage
                 localStorage.removeItem("loginDeets")
+                localStorage.removeItem("allMessages")
+
                 //alert(JSON.stringify(values, null, 2));
                 toast({
                   title: 'Successful!.',

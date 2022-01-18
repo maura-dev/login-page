@@ -36,15 +36,20 @@ export default function Chat({email}) {
                     borderColor="gray.100"
                     w={{base:"100%", md:"38%"}}
                     h="100%"
-                    hover={{
-                        bg:"gray.100"
-                    }}
                     display={{base: showChatPage? "none" :"block", md:"block"}}
-                    onClick={()=> setshowChatPage(true)}
                 >
                     <Text fontWeight="700" fontSize="1.5em" px={10} h="10vh" pt="15px">Chats</Text>
                     <Divider/>
-                    <Flex alignItems="center" px={5} py="10px" cursor="pointer">
+                    <Flex 
+                        alignItems="center" 
+                        px={5} 
+                        py="10px" 
+                        cursor="pointer"
+                         onClick={()=> setshowChatPage(true)}
+                        _hover={{
+                            bg:"gray.100"
+                        }}
+                    >
                         <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' /> 
                         <Box w="70%" ml="20px">
                             <Text fontWeight="600" fontSize="1.2em">Chat Bot</Text>
@@ -52,7 +57,10 @@ export default function Chat({email}) {
                                 {messages.length===0 ? "I am a bot" : messages[messages.length - 1].message}
                             </Text>
                         </Box>
-                        <Text fontWeight="500" fontSize="1em">Time</Text>
+                        <Text fontWeight="500" fontSize="0.7em">
+                            {messages.length===0 ? new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) 
+                            : messages[messages.length - 1].time}
+                        </Text>
                     </Flex>
                     <Divider/>
 
@@ -79,7 +87,7 @@ export default function Chat({email}) {
                         </Box>
                     </Flex>
                     <Divider/>
-                    <Box h="60vh" overflowY="scroll" py={3} px={5}>
+                    <Box h="60vh" overflowY="scroll" py={3} px={5} id="msg-section">
                         {messages.length===0 ? 
                         (<>
                         <Image src={Img} w="auto" h="80%" mx="auto"/>
@@ -97,22 +105,34 @@ export default function Chat({email}) {
                             borderLeftRadius="md"
                             borderTopRightRadius="md"
                             mt={3}
+                            position="relative"
                             >
                                <Text fontWeight="400" fontSize="0.8em">{message.message}</Text>
+                               <Text 
+                               fontWeight="400" 
+                               fontSize="0.6em"
+                               position="absolute"
+                               top="15px"
+                               right="10px"
+                               >{message?.time}</Text>
                             </Box>) 
                         )}
                     </Box>
                     <Formik
                         initialValues={{
-                            id:messages.length,
                             message:"",
-
                         }}
                         validationSchema={validationSchema}
-                        onSubmit={(values, { setSubmitting, resetForm }) => {
-                            messages.push(values)
-                            setmessages(messages)
+                        onSubmit={async(values, { setSubmitting, resetForm }) => {
+                            await messages.push({
+                                id: messages.length,
+                                time:new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}),
+                                message: values.message
+                            })
+                            //alert(JSON.stringify(messages))
                             localStorage.setItem("allMessages", JSON.stringify(messages))
+                            setmessages(JSON.parse(localStorage.getItem("allMessages")))
+                            document.getElementById("msg-section").scroll({bottom:0})
                             resetForm();
                             setSubmitting(false);
                             //alert(JSON.stringify(messages))

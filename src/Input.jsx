@@ -33,10 +33,10 @@ export const MessageInput = ({ inputRef, mb, ...props }) => {
 
   return (
     <FormControl mb={mb || 8} isRequired isInvalid={meta.touched && meta.error}>
-      <Textarea ref={inputRef} {...field} {...props} borderRadius="50px" rows="1"/>
-      {/* {meta.touched && meta.error ? (
-        <FormErrorMessage>{meta.error}</FormErrorMessage>
-      ) : null} */}
+      <Textarea ref={inputRef} {...field} {...props} borderRadius="50px" rows="1" errorBorderColor='none'/>
+      {meta.touched && meta.error ? (
+        <FormErrorMessage d="none">{meta.error}</FormErrorMessage>
+      ) : null}
     </FormControl>
   );
 };
